@@ -17,7 +17,7 @@ my_flask_project/
 3. Add code to the files.
 Copy the provided app.py code into the app.py file in your project folder. Similarly, copy the provided index.html code into the index.html file inside the templates folder.
 
-Run the application.
+4. Run the application.
 Open a terminal, navigate to the project folder (my_flask_project), and run the following command: python app.py
 
 5. Access the application.
