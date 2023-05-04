@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
+        min-height: 100vh; /* Change height to min-height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 2rem;
+    }
+
+        h1 {
+            font-weight: 500;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-weight: 50;
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin-bottom: 1rem;
+            font-size: 14px;
+        }
+
+        button {
+            background-image: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-top: 1rem; /* Add margin-top to the table */
+    }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #86a8e7;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+.subtitle {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+#forecast-message {
+    font-size: 1.5rem;
+    color: #fff; /* Change color to black */
+    font-weight: bold; /* Make text bold */
+    margin-bottom: 1rem;
+    text-align: center; /* Center the text */
+}
+
+.button {
+    display: inline-block;
+    background-color: #86a8e7;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+    margin-top: 1rem;
+    text-align: right;
+    float: right;
+}
+
+.button:hover {
+    transform: scale(1.1);
+    background-color: #7f7fd5;
+}
+
+
+    </style>
+    <title>Sales Forecasting using Econometric Data</title>
+</head>
+<body>
+    <h1>Sales Forecasting using Econometric Data</h1>
+<p class="subtitle">COMP 512: Advanced OS - Pranav Batra & Sanjana Athmaraman</p>
+
+
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload your test data CSV file:</label>
+        <input type="file" id="file" name="file" accept=".csv">
+        <button type="submit">Get Forecast</button>
+    </form>
+
+
+{% if forecast %}
+<p id="forecast-message">Below is your forecasted sales:</p>
+{% for business_unit in business_units %}
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Business Unit</th>
+            <th>Region</th>
+            <th>Product Line Code</th>
+            <th>Forecast Value</th>
+        </tr>
+        {% for row in forecast %}
+            {% if row['Business Unit'] == business_unit %}
+                <tr>
+                    <td>{{ row.Date }}</td>
+                    <td>{{ row['Business Unit'] }}</td>
+                    <td>{{ row.Region }}</td>
+                    <td>{{ row['Product_line_code'] }}</td>
+                    <td>{{ '{:.2f}'.format(row['Forecast value']) }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endfor %}
+<a href="{{ url_for('download') }}" class="button">Download CSV</a>
+{% endif %}
+
+</body>
+</html>
+
+
